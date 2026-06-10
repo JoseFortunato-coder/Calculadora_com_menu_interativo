@@ -139,7 +139,7 @@ public class Calculadora_com_menu_interativo {
             }
         } while (numero != 6) ;
 
-
+scanner.close();
         }
     }
 

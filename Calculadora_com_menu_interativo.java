@@ -104,7 +104,7 @@ public class Calculadora_com_menu_interativo {
                 }
                 System.out.println(resultado);
                 do {
-                    System.out.println("(Escreva o próximo número ou escreva Sair voltar para ao menu.)");
+                    System.out.println("(Escreva o próximo número pelo qual você quer dividir o número que colocou ou escreva Sair voltar para ao menu.)");
                     String proxEntrada = scanner.nextLine();
                     if (proxEntrada.equalsIgnoreCase("Sair")) break;
                     try {

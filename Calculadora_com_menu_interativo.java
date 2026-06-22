@@ -63,7 +63,7 @@ public class Calculadora_com_menu_interativo {
                     String proxEntrada = scanner.nextLine();
                     if (proxEntrada.equalsIgnoreCase("Sair")) break;
                     try {
-                        resultado += Double.parseDouble(proxEntrada);
+                        resultado -= Double.parseDouble(proxEntrada);
                         System.out.println(resultado);
                     } catch (NumberFormatException e) {
                         System.out.println("Selecione uma opção válida.");

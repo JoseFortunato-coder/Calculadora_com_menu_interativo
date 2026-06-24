@@ -20,7 +20,7 @@ public class Calculadora_com_menu_interativo {
                 fazerSoma(scanner);
 
             } else if (numero == 2) {
-               fazerSubtracao(scanner);
+                fazerSubtracao(scanner);
 
 
             } else if (numero == 3) {
@@ -34,7 +34,7 @@ public class Calculadora_com_menu_interativo {
                         resultado *= Double.parseDouble(MaisDe1multiplicacao[i]);
                     }
                     System.out.println(resultado);
-                }else{
+                } else {
                     System.out.println("Digite uma opção valida. ");
                     continue;
                 }
@@ -129,63 +129,85 @@ public class Calculadora_com_menu_interativo {
     }
 
     public static double fazerSoma(Scanner scanner) {
-        double numero = 0;
-
 
         double resultado = 0;
 
-            resultado = 0;
+        System.out.println("Escreva os números que quer somar: ");
+        String expressao = scanner.nextLine();
 
-            System.out.println("Escreva os números que quer somar. ");
-            String expressao = scanner.nextLine();
-        if (expressao.matches("[0-9+]+")) {
-            String[] MaisDe1Soma = expressao.split("\\+");
-            for (String n : MaisDe1Soma) {
-                resultado += Double.parseDouble(n);
+        String[] partes = expressao.split("\\+");
+
+        try {
+            resultado = Double.parseDouble(partes[0]);
+
+            for (int i = 1; i < partes.length; i++) {
+                resultado += Double.parseDouble(partes[i]);
             }
+
             System.out.println(resultado);
-        }else{
-            System.out.println("Digite algo válido para soma ");
+
+        } catch (NumberFormatException e) {
+            System.out.println("Erro: digite apenas números separados por +");
+            return 0;
         }
-        do {
-            System.out.println("(Escreva o próximo número ou escreva Sair voltar para ao menu.)");
+
+        while (true) {
+            System.out.println("(Digite outro número ou 'Sair' para voltar ao menu)");
             String proxEntrada = scanner.nextLine();
+
             if (proxEntrada.equalsIgnoreCase("Sair")) break;
+
             try {
                 resultado += Double.parseDouble(proxEntrada);
                 System.out.println(resultado);
             } catch (NumberFormatException e) {
-                System.out.println("Selecione uma opção válida.");
+                System.out.println("Número inválido. Tente novamente.");
             }
-        } while (true);
-        return resultado;
-    }
-    public static double fazerSubtracao(Scanner scanner) {
-        double resultado = 0;
-        double numero = 0;
-        resultado = 0;
-        System.out.println("Escreva os números que quer subtrair. ");
-        String expressao = scanner.nextLine();
-        String[] MaisDe1Subtracao = expressao.split("\\-");
-        resultado = Double.parseDouble(MaisDe1Subtracao[0]);
-
-        for (int i = 1; i < MaisDe1Subtracao.length; i++) {
-            resultado -= Double.parseDouble(MaisDe1Subtracao[i]);
         }
-        System.out.println(resultado);
-        do {
-            System.out.println("(Escreva o próximo número ou escreva Sair voltar para ao menu.)");
+
+        return resultado;
+
+    }
+
+    public static double fazerSubtracao(Scanner scanner) {
+
+
+        double resultado = 0;
+
+        System.out.println("Escreva os números que quer subtrair: ");
+        String expressao = scanner.nextLine();
+
+        String[] partes = expressao.split("\\-");
+
+        try {
+            resultado = Double.parseDouble(partes[0]);
+
+            for (int i = 1; i < partes.length; i++) {
+                resultado -= Double.parseDouble(partes[i]);
+            }
+
+            System.out.println(resultado);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Erro: digite apenas números separados por -");
+            return 0;
+        }
+
+        while (true) {
+            System.out.println("(Digite outro número ou 'Sair' para voltar ao menu)");
             String proxEntrada = scanner.nextLine();
+
             if (proxEntrada.equalsIgnoreCase("Sair")) break;
+
             try {
                 resultado -= Double.parseDouble(proxEntrada);
                 System.out.println(resultado);
             } catch (NumberFormatException e) {
-                System.out.println("Selecione uma opção válida.");
+                System.out.println("Número inválido. Tente novamente.");
             }
-        } while (true);
+        }
+
         return resultado;
+
     }
 }
-
-

@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class Calculadora_com_menu_interativo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        double resultado = 0;
+        double resultado = fazerSoma(scanner) ;
         double numero = 0;
 
         do {
@@ -18,6 +18,7 @@ public class Calculadora_com_menu_interativo {
 
             } else if (numero == 1) {
                 fazerSoma(scanner);
+                continuarCalculo(scanner , resultado);
 
             } else if (numero == 2) {
                 fazerSubtracao(scanner);
@@ -150,8 +151,13 @@ public class Calculadora_com_menu_interativo {
             System.out.println("Erro: digite apenas números separados por +");
             return 0;
         }
+        return resultado;
+    }
+
+    public static double continuarCalculo(Scanner scanner, double resultado ) {
 
         while (true) {
+
             System.out.println("(Digite outro número ou 'Sair' para voltar ao menu)");
             String proxEntrada = scanner.nextLine();
 
@@ -164,11 +170,8 @@ public class Calculadora_com_menu_interativo {
                 System.out.println("Número inválido. Tente novamente.");
             }
         }
-
         return resultado;
-
     }
-
     public static double fazerSubtracao(Scanner scanner) {
 
 
@@ -211,3 +214,5 @@ public class Calculadora_com_menu_interativo {
 
     }
 }
+
+

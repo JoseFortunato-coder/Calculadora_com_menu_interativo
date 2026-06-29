@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class Calculadora_com_menu_interativo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        double resultado = fazerSoma(scanner) ;
+        double resultado = 0 ;
         double numero = 0;
 
         do {
@@ -17,39 +17,18 @@ public class Calculadora_com_menu_interativo {
                 System.out.println("digite uma opção valida. ");
 
             } else if (numero == 1) {
-                fazerSoma(scanner);
-                continuarCalculo(scanner , resultado);
+
+
+                resultado = fazerSoma(scanner);
+                continuarCalculo(scanner, resultado, '+');
 
             } else if (numero == 2) {
-                fazerSubtracao(scanner);
-
+              resultado = fazerSubtracao(scanner );
+                continuarCalculo(scanner, resultado, '-');
 
             } else if (numero == 3) {
-                resultado = 0;
-                System.out.println("Escreva os números que quer multiplicar. ");
-                String expressao = scanner.nextLine();
-                if (expressao.matches("[0-9.]*")) {
-                    String[] MaisDe1multiplicacao = expressao.split("\\*");
-                    resultado = Double.parseDouble(MaisDe1multiplicacao[0]);
-                    for (int i = 1; i < MaisDe1multiplicacao.length; i++) {
-                        resultado *= Double.parseDouble(MaisDe1multiplicacao[i]);
-                    }
-                    System.out.println(resultado);
-                } else {
-                    System.out.println("Digite uma opção valida. ");
-                    continue;
-                }
-                do {
-                    System.out.println("(Escreva o próximo número ou escreva Sair voltar para ao menu.)");
-                    String proxEntrada = scanner.nextLine();
-                    if (proxEntrada.equalsIgnoreCase("Sair")) break;
-                    try {
-                        resultado *= Double.parseDouble(proxEntrada);
-                        System.out.println(resultado);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Selecione uma opção válida.");
-                    }
-                } while (true);
+                resultado = fazerMultiplicacao(scanner);
+               continuarCalculo(scanner, resultado, '*');
 
 
             } else if (numero == 4) {
@@ -57,10 +36,10 @@ public class Calculadora_com_menu_interativo {
                 System.out.println("Escreva sua divisão. ");
                 String expressao = scanner.nextLine();
                 String[] MaisDe1divisao = expressao.split("/");
-                resultado = Double.parseDouble(MaisDe1divisao[0]);
+                resultado = lerDouble(MaisDe1divisao[0]);
                 for (int i = 1; i < MaisDe1divisao.length; i++) {
 
-                    resultado /= Double.parseDouble(MaisDe1divisao[i]);
+                    resultado /= lerDouble(MaisDe1divisao[i]);
                 }
                 System.out.println(resultado);
                 do {
@@ -68,7 +47,7 @@ public class Calculadora_com_menu_interativo {
                     String proxEntrada = scanner.nextLine();
                     if (proxEntrada.equalsIgnoreCase("Sair")) break;
                     try {
-                        resultado /= Double.parseDouble(proxEntrada);
+                        resultado /= lerDouble(proxEntrada);
                         System.out.println(resultado);
                     } catch (NumberFormatException e) {
                         System.out.println("Selecione uma opção válida.");
@@ -76,25 +55,24 @@ public class Calculadora_com_menu_interativo {
                 } while (true);
 
             } else if (numero == 5) {
-                resultado = 0;
-                System.out.println(" Escreva o número que irá ser elevado. ");
-                double NumeroASeElevar = scanner.nextDouble();
-                System.out.println("Escreva o quanto quer eleva-lo ");
-                double elevacao = scanner.nextDouble();
-                double resultadoPotencia = Math.pow(NumeroASeElevar, elevacao);
-                scanner.nextLine();
-                System.out.println(NumeroASeElevar + " ^ " + elevacao + " = " + resultadoPotencia);
-                do {
-                    System.out.println("(Escreva o próximo número que pelo qual irá elevar o resultado ou escreva Sair voltar para ao menu.)");
-                    String proxEntrada = scanner.nextLine();
-                    if (proxEntrada.equalsIgnoreCase("Sair")) break;
-                    try {
-                        resultadoPotencia = Math.pow(resultadoPotencia, Double.parseDouble(proxEntrada));
-                        System.out.println(resultadoPotencia);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Selecione uma opção válida.");
-                    }
-                } while (true);
+                System.out.println("Escreva a potência:");
+                String expressao = scanner.nextLine();
+
+                String[] partes = expressao.split("\\^");
+
+                try {
+                    double base = lerDouble(partes[0]);
+                    double expoente = lerDouble(partes[1]);
+
+                    resultado = Math.pow(base, expoente);
+
+                    System.out.println(resultado);
+
+                } catch (Exception e) {
+                    System.out.println("Erro: digite no formato 2^3");
+                }
+                  continuarCalculo(scanner, resultado, '^');
+
             } else if (numero == 6) {
                 System.out.println("Saindo... ");
             }
@@ -139,10 +117,10 @@ public class Calculadora_com_menu_interativo {
         String[] partes = expressao.split("\\+");
 
         try {
-            resultado = Double.parseDouble(partes[0]);
+            resultado = lerDouble(partes[0]);
 
             for (int i = 1; i < partes.length; i++) {
-                resultado += Double.parseDouble(partes[i]);
+                resultado += lerDouble(partes[i]);
             }
 
             System.out.println(resultado);
@@ -164,7 +142,7 @@ public class Calculadora_com_menu_interativo {
             if (proxEntrada.equalsIgnoreCase("Sair")) break;
 
             try {
-                resultado += Double.parseDouble(proxEntrada);
+                resultado += lerDouble(proxEntrada);
                 System.out.println(resultado);
             } catch (NumberFormatException e) {
                 System.out.println("Número inválido. Tente novamente.");
@@ -183,10 +161,11 @@ public class Calculadora_com_menu_interativo {
         String[] partes = expressao.split("\\-");
 
         try {
-            resultado = Double.parseDouble(partes[0]);
+            resultado = lerDouble(partes[0]);
+
 
             for (int i = 1; i < partes.length; i++) {
-                resultado -= Double.parseDouble(partes[i]);
+                resultado -= lerDouble(partes[i]);
             }
 
             System.out.println(resultado);
@@ -195,24 +174,68 @@ public class Calculadora_com_menu_interativo {
             System.out.println("Erro: digite apenas números separados por -");
             return 0;
         }
+        return resultado;
+    }
+    public static double fazerMultiplicacao(Scanner scanner) {
+        double resultado = 0;
 
+        System.out.println("Escreva os números que quer multiplicar: ");
+        String expressao = scanner.nextLine();
+
+        String[] partes = expressao.split("\\*");
+
+        try {
+            resultado = lerDouble(partes[0]);
+
+
+            for (int i = 1; i < partes.length; i++) {
+                resultado *= lerDouble(partes[i]);
+            }
+
+            System.out.println(resultado);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Erro: digite apenas números separados por *");
+            return 0;
+        }
+        return resultado;
+    }
+    public static double lerDouble(String texto) {
+        return Double.parseDouble(texto.trim().replace(',', '.'));
+    }
+    public static double continuarCalculo(Scanner scanner, double resultado, char operador) {
         while (true) {
-            System.out.println("(Digite outro número ou 'Sair' para voltar ao menu)");
+            System.out.println("(Digite outro número ou 'Sair')");
+
             String proxEntrada = scanner.nextLine();
 
-            if (proxEntrada.equalsIgnoreCase("Sair")) break;
+            if (proxEntrada.equalsIgnoreCase("Sair"))
+                break;
 
-            try {
-                resultado -= Double.parseDouble(proxEntrada);
-                System.out.println(resultado);
-            } catch (NumberFormatException e) {
-                System.out.println("Número inválido. Tente novamente.");
+            double numero = lerDouble(proxEntrada);
+
+            switch (operador) {
+                case '+':
+                    resultado += numero;
+                    break;
+                case '-':
+                    resultado -= numero;
+                    break;
+                case '*':
+                    resultado *= numero;
+                    break;
+                case '/':
+                    resultado /= numero;
+                    break;
+                case  '^':
+                    resultado = Math.pow(resultado, numero);
+                    break;
+
             }
+
+            System.out.println(resultado);
         }
 
         return resultado;
-
     }
 }
-
-

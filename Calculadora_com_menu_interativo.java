@@ -23,55 +23,21 @@ public class Calculadora_com_menu_interativo {
                 continuarCalculo(scanner, resultado, '+');
 
             } else if (numero == 2) {
-              resultado = fazerSubtracao(scanner );
+                resultado = fazerSubtracao(scanner );
                 continuarCalculo(scanner, resultado, '-');
 
             } else if (numero == 3) {
                 resultado = fazerMultiplicacao(scanner);
-               continuarCalculo(scanner, resultado, '*');
+                continuarCalculo(scanner, resultado, '*');
 
 
             } else if (numero == 4) {
-                resultado = 0;
-                System.out.println("Escreva sua divisão. ");
-                String expressao = scanner.nextLine();
-                String[] MaisDe1divisao = expressao.split("/");
-                resultado = lerDouble(MaisDe1divisao[0]);
-                for (int i = 1; i < MaisDe1divisao.length; i++) {
-
-                    resultado /= lerDouble(MaisDe1divisao[i]);
-                }
-                System.out.println(resultado);
-                do {
-                    System.out.println("(Escreva o próximo número pelo qual você quer dividir o número que colocou ou escreva Sair voltar para ao menu.)");
-                    String proxEntrada = scanner.nextLine();
-                    if (proxEntrada.equalsIgnoreCase("Sair")) break;
-                    try {
-                        resultado /= lerDouble(proxEntrada);
-                        System.out.println(resultado);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Selecione uma opção válida.");
-                    }
-                } while (true);
+                resultado = fazerDivisao(scanner);
+                continuarCalculo(scanner, resultado, '/');
 
             } else if (numero == 5) {
-                System.out.println("Escreva a potência:");
-                String expressao = scanner.nextLine();
-
-                String[] partes = expressao.split("\\^");
-
-                try {
-                    double base = lerDouble(partes[0]);
-                    double expoente = lerDouble(partes[1]);
-
-                    resultado = Math.pow(base, expoente);
-
-                    System.out.println(resultado);
-
-                } catch (Exception e) {
-                    System.out.println("Erro: digite no formato 2^3");
-                }
-                  continuarCalculo(scanner, resultado, '^');
+               resultado = fazerPotencia(scanner);
+                continuarCalculo(scanner, resultado, '^');
 
             } else if (numero == 6) {
                 System.out.println("Saindo... ");
@@ -197,6 +163,39 @@ public class Calculadora_com_menu_interativo {
         } catch (NumberFormatException e) {
             System.out.println("Erro: digite apenas números separados por *");
             return 0;
+        }
+        return resultado;
+    }
+    public static double fazerDivisao(Scanner scanner) {
+        double resultado = 0;
+        System.out.println("Escreva sua divisão. ");
+        String expressao = scanner.nextLine();
+        String[] MaisDe1divisao = expressao.split("/");
+        resultado = lerDouble(MaisDe1divisao[0]);
+        for (int i = 1; i < MaisDe1divisao.length; i++) {
+
+            resultado /= lerDouble(MaisDe1divisao[i]);
+        }
+        System.out.println(resultado);
+        return resultado;
+    }
+    public static double fazerPotencia(Scanner scanner) {
+        double resultado = 0;
+        System.out.println("Escreva a potência:");
+        String expressao = scanner.nextLine();
+
+        String[] partes = expressao.split("\\^");
+
+        try {
+            double base = lerDouble(partes[0]);
+            double expoente = lerDouble(partes[1]);
+
+            resultado = Math.pow(base, expoente);
+
+            System.out.println(resultado);
+
+        } catch (Exception e) {
+            System.out.println("Erro: digite no formato 2^3");
         }
         return resultado;
     }
